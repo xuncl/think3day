@@ -1,1 +1,1 @@
-"# think3day" 
+# think3day

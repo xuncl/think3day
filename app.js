@@ -1,11 +1,27 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const nunjucks =require('nunjucks');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+const bodyParser = require('body-parser');
+require('body-parser-xml')(bodyParser);
 
+//引入token刷新
+const getToken = require('./libs/common');
+getToken();
+
+//创建菜单
+const createMenu = require('./libs/wxCustomeMenu');
+createMenu();
+
+//引入路由
+const weixin = require('./routes/weixin');
+const auth = require('./routes/auth');
+const userinfo = require('./routes/userinfo');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var wxRouter = require('./routes/weixin');
 
 var app = express();
 
@@ -17,10 +33,27 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//解析xml
+app.use(bodyParser.xml({
+  limit: '1MB',
+  xmlParseOptions: {
+    normalize: true,
+    normalizeTags: true,
+    explicitArray: false
+  }
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+//启用路由
+app.use('/wechat', weixin);
+app.use(auth);
+app.use(userinfo);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/weixin', wxRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,5 +70,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// edit in www file.
+// app.listen(80);
+console.log('Its running');
 
 module.exports = app;

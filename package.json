@@ -21,6 +21,17 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "mongodb": "^3.0.0",
+    "bluebird": "^3.4.1",
+    "body-parser": "^1.15.2",
+    "body-parser-xml": "^1.1.0",
+    "cheerio": "^0.20.0",
+    "iconv-lite": "^0.4.13",
+    "lodash": "^4.13.1",
+    "nunjucks": "^2.4.2",
+    "request": "^2.72.0",
+    "superagent": "^2.0.0",
+    "xml2js": "^0.4.16"
   }
 }

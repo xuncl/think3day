@@ -21,7 +21,6 @@ const auth = require('./routes/auth');
 const userinfo = require('./routes/userinfo');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var wxRouter = require('./routes/weixin');
 
 var app = express();
 
@@ -53,7 +52,6 @@ app.use(userinfo);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/weixin', wxRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

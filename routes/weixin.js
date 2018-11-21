@@ -1,6 +1,6 @@
 const router =require('express').Router();
 const wxAuth = require('../libs/wxAuth');
-const turingRobot = require('../libs/turingRobot');
+// const turingRobot = require('../libs/turingRobot');
 const autoReply = require('../libs/wxAutoReply');
 
 router.get('/', wxAuth);
@@ -14,11 +14,15 @@ router.post('/', function (req, res) {
     res.end(resMsg);
   } else {
     var info = encodeURI(req.body.xml.content);
-    turingRobot(info).then(function (data) {
-      var response = JSON.parse(data);
-      var resMsg = autoReply('text', req.body.xml, response.text);
-      res.end(resMsg);
-    })
+
+    var resMsg = autoReply('text', req.body.xml, info);
+    res.end(resMsg);
+    // turingRobot(info).then(function (data) {
+    //   console.log(data);
+    //   var response = JSON.parse(data);
+    //   var resMsg = autoReply('text', req.body.xml, response.text);
+    //   res.end(resMsg);
+    // });
   }
 });
 

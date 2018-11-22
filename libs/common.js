@@ -40,8 +40,9 @@ const saveToken = function () {
 const refreshToken = function () {
   saveToken();
   setInterval(function () {
+    console.log('now refresh token..')
     saveToken();
-  }, 7000*1000);
+  }, 1000*1000);
 };
 
 module.exports = refreshToken;

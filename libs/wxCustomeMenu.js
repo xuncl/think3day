@@ -15,6 +15,11 @@ var menus = {
           "type": "view",
           "name": "授权登录",
           "url": "http://www.think3day.com/auth"
+        },
+        {
+          "type": "view",
+          "name": "授权登录2",
+          "url": "http://www.think3day.com/list"
         }]
     }]
 };

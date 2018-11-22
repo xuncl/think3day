@@ -26,5 +26,14 @@ router.post('/', function (req, res) {
   }
 });
 
+/* GET users listing. */
+router.get('/test', function(req, res, next) {
+
+  res.render('user',{userinfo: req});
+
+  console.log(req);
+
+});
+
 module.exports = router;
 

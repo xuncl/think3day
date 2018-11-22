@@ -23,7 +23,7 @@ function getUserInfo(AccessToken, openId) {
         reject(err);
       }
     });
-  })
+  });
 }
 
 module.exports = getUserInfo;

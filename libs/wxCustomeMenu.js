@@ -19,7 +19,7 @@ var menus = {
         {
           "type": "view",
           "name": "授权登录2",
-          "url": "http://www.think3day.com/list"
+          "url": "http://www.think3day.com/user/fetch"
         }]
     }]
 };

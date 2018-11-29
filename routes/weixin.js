@@ -13,8 +13,7 @@ router.post('/', function (req, res) {
     var resMsg = autoReply('text', req.body.xml, '欢迎关注');
     res.end(resMsg);
   } else {
-    var info = encodeURI(req.body.xml.content);
-
+    var info = req.body.xml.content;
     var resMsg = autoReply('text', req.body.xml, info);
     res.end(resMsg);
     // turingRobot(info).then(function (data) {

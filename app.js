@@ -1,11 +1,12 @@
 const createError = require('http-errors');
 const express = require('express');
-const nunjucks =require('nunjucks');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
+const mongoose = require('mongoose');
+const config = require('./config');
 
 //引入token刷新
 const getToken = require('./libs/common');
@@ -16,9 +17,9 @@ const createMenu = require('./libs/wxCustomeMenu');
 createMenu();
 
 //引入路由
-const weixin = require('./routes/weixin');
-const auth = require('./routes/auth');
-const userinfo = require('./routes/userinfo');
+var wechatRouter = require('./routes/weixin');
+var authRouter = require('./routes/auth');
+var userRouter = require('./routes/user');
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -31,6 +32,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Set up mongoose connection
+let dev_db_url = 'mongodb://'+config.mongohost+':'+config.mongoport+'/test';
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //解析xml
 app.use(bodyParser.xml({
@@ -45,9 +54,9 @@ app.use(bodyParser.xml({
 app.use(express.static(path.join(__dirname, 'public')));
 
 //启用路由
-app.use('/wechat', weixin);
-app.use(auth);
-app.use(userinfo);
+app.use('/wechat', wechatRouter);
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
 
 app.use('/', indexRouter);
 
@@ -72,3 +81,4 @@ app.use(function(err, req, res, next) {
 console.log('Its running');
 
 module.exports = app;
+

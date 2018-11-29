@@ -1,4 +1,5 @@
-'use strict';
+ /* jshint esversion: 6 */
+// 'use strict';
 const fs = require('fs');
 const request = require('request');
 const qs = require('querystring');
@@ -20,8 +21,8 @@ function getJsApiTicket() {
       } else {
         reject(err);
       }
-    })
-  })
+    });
+  });
 }
 
 function getNonceStr () {
@@ -55,7 +56,7 @@ function getJsApiData(clientUrl) {
   let timestamp = getTimestamp();
   return getJsApiTicket().then(data => {
     return [getSign(JSON.parse(data).ticket, noncestr, timestamp, clientUrl), timestamp, noncestr];
-  })
+  });
 }
 
 module.exports = getJsApiData;

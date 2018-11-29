@@ -1,3 +1,4 @@
+ /* jshint esversion: 6 */
 const router =require('express').Router();
 const wxAuth = require('../libs/wxAuth');
 // const turingRobot = require('../libs/turingRobot');
@@ -14,8 +15,8 @@ router.post('/', function (req, res) {
     res.end(resMsg);
   } else {
     var info = req.body.xml.content;
-    var resMsg = autoReply('text', req.body.xml, info);
-    res.end(resMsg);
+    var resMsg2 = autoReply('text', req.body.xml, info);
+    res.end(resMsg2);
     // turingRobot(info).then(function (data) {
     //   console.log(data);
     //   var response = JSON.parse(data);

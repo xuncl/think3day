@@ -1,3 +1,4 @@
+ /* jshint esversion: 6 */
 const request = require('request');
 const config = require('../config');
 
@@ -20,7 +21,7 @@ function getTuringResponse(info) {
         reject(err);
       }
     });
-  })
+  });
 }
 
 module.exports = getTuringResponse;

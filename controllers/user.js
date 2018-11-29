@@ -1,7 +1,8 @@
-var UserModel = require('../models/user')
+ /* jshint esversion: 6 */
+var UserModel = require('../models/user');
 var ObjectId = require('mongoose').Types.ObjectId;
-const getToken = require('../websdk/getWebToken');
-const getUserInfo = require('../websdk/getWebUserInfo');
+var getToken = require('../websdk/getWebToken');
+var getUserInfo = require('../websdk/getWebUserInfo');
 
 exports.user_info = function (req, res) {
     getToken(req.query.code)
@@ -9,10 +10,10 @@ exports.user_info = function (req, res) {
         return JSON.parse(data);
       })
       .then(function (data) {
-        getUserInfo(data['access_token'], data['openid']).then(_ => {
-            var u = JSON.parse(_);
+        getUserInfo(data.access_token, data.openid).then(user_info => {
+            var u = JSON.parse(user_info);
             if (u.openid) {
-                let user = new UserModel(
+                var user = new UserModel(
                     {
                         id: u.openid,
                         name: u.nickname,
@@ -31,9 +32,9 @@ exports.user_info = function (req, res) {
                     } else {
                         user.save(function (err) {
                             if (err) {
-                                res.send('User Not Created. '+ err)
+                                res.send('User Not Created. '+ err);
                             }
-                            res.render('user', {userinfo: _, a:'User Created successfully'});
+                            res.render('user', {userinfo: user_info, a:'User Created successfully'});
                         });
                     } 
                 });
@@ -43,7 +44,7 @@ exports.user_info = function (req, res) {
 };
 
 exports.user_create = function (req, res) {
-    let user = new UserModel(
+    var user = new UserModel(
         {
             id: req.body.id,
             name: req.body.name,
@@ -55,7 +56,7 @@ exports.user_create = function (req, res) {
         } else {
             user.save(function (err) {
                 if (err) {
-                    res.send('User Not Created. '+ err)
+                    res.send('User Not Created. '+ err);
                 }
                 res.send('User Created successfully');
             });
@@ -67,14 +68,14 @@ exports.user_get_by_id = function (req, res) {
     UserModel.findOne({id : req.params.id }, { '_id': 0, '__v': 0},function (err, user) {
         if (err) res.send(err);
         res.send(user);
-    })
+    });
 };
 
 exports.user_get_all_users= function (req, res) {
     UserModel.find({},{ '_id': 0, '__v': 0} , function (err, user) {
         if (err) res.send(err);
         res.send(user);
-    })
+    });
 };
 
 exports.user_update_by_id= function (req, res) {

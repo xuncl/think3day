@@ -1,3 +1,4 @@
+ /* jshint esversion: 6 */
 const router = require('express').Router();
 const qs = require('querystring');
 const config = require('../config');

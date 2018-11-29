@@ -1,4 +1,5 @@
-'use strict';
+ /* jshint esversion: 6 */
+// 'use strict';
 const request = require('request');
 const qs = require('querystring');
 const config = require('../config');
@@ -25,8 +26,8 @@ function getToken(code) {
       } else {
         reject(err);
       }
-    })
-  })
+    });
+  });
 }
 
 module.exports = getToken;

@@ -1,4 +1,5 @@
-'use strict';
+// 'use strict';
+ /* jshint esversion: 6 */
 const fs = require('fs');
 const request = require('request');
 
@@ -35,11 +36,11 @@ function createMenu() {
   
   request.post(options, function (err, res, body) {
     if (err) {
-      console.log(err)
+      console.log(err);
     }else {
       console.log(body);
     }
-  })
+  });
   
 }
 

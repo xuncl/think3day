@@ -1,3 +1,4 @@
+ /* jshint esversion: 6 */
 const crypto = require('crypto');
 const path = require('path');
 const url = require('url');
@@ -17,7 +18,7 @@ function wechatAuth(req, res) {
   var query = url.parse(req.url, true).query;
   var signature = query.signature;
   var echostr = query.echostr;
-  var timestamp = query['timestamp'];
+  var timestamp = query.timestamp;
   var nonce = query.nonce;
 
   var reqArray = [nonce, timestamp, config.token];

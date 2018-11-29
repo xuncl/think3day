@@ -1,3 +1,4 @@
+ /* jshint esversion: 6 */
 //自动回复消息
 const request = require('request');
 
@@ -9,9 +10,10 @@ const request = require('request');
  */
 
 function autoReply(msgType, requestData, info) {
+  var resMsg;
   switch (msgType) {
     case 'text':
-      var resMsg = '<xml>' +
+      resMsg = '<xml>' +
         '<ToUserName><![CDATA[' + requestData.fromusername + ']]></ToUserName>' +
         '<FromUserName><![CDATA[' + requestData.tousername + ']]></FromUserName>' +
         '<CreateTime>' + parseInt(new Date().valueOf() / 1000) + '</CreateTime>' +
@@ -21,7 +23,7 @@ function autoReply(msgType, requestData, info) {
       break;
     //关注事件
     case 'subscribe':
-      var resMsg = '<xml>' +
+      resMsg = '<xml>' +
         '<ToUserName><![CDATA[' + requestData.fromusername + ']]></ToUserName>' +
         '<FromUserName><![CDATA[' + requestData.tousername + ']]></FromUserName>' +
         '<CreateTime>' + parseInt(new Date().valueOf() / 1000) + '</CreateTime>' +

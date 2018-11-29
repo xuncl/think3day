@@ -1,3 +1,4 @@
+ /* jshint esversion: 6 */
 const parserString = require('xml2js').parseString;
 const fs = require('fs');
 const crypto = require('crypto');
@@ -16,8 +17,8 @@ exports.convertXMLtoJSON = function (xml) {
       }else {
         resolve(results);
       }
-    })
-  })
+    });
+  });
 };
 
 //判断文件是否存在
@@ -35,4 +36,4 @@ exports.sha1 = function (str) {
   shasum.update(str);
   str = shasum.digest("hex");
   return str;
-}
+};

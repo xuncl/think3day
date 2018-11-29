@@ -1,3 +1,4 @@
+ /* jshint esversion: 6 */
 const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');

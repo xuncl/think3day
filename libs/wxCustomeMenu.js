@@ -21,6 +21,11 @@ var menus = {
           "type": "view",
           "name": "授权登录2",
           "url": "http://www.think3day.com/user/fetch"
+        },
+        {
+          "type": "view",
+          "name": "测试模板消息",
+          "url": "http://www.think3day.com/tm/test"
         }]
     }]
 };

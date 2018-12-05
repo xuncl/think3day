@@ -1,7 +1,5 @@
  /* jshint esversion: 6 */
 const router = require('express').Router();
-const qs = require('querystring');
-const config = require('../config');
 var thinking_controller = require('../controllers/thinking');
 
 /* CRUD thinking APIs. */

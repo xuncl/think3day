@@ -1,18 +1,38 @@
  /* jshint esversion: 6 */
 var ThinkingModel = require('../models/thinking');
 var ObjectId = require('mongoose').Types.ObjectId;
+var MD5 = require('../libs/md5');
+var User = require('../models/user');
 
 exports.thinking_create = function (req, res) {
+    
+    var raw = req.body.content;
+
+    var rawmd5 = MD5.hex_md5(raw);
+
+    var username = "Unknown";
+
+    // get user name
+    UserModel.findOne({id : req.body.userid }, { '_id': 0, '__v': 0},function (err, user) {
+        if (err) {
+            res.send(err);
+        } else {
+            if(user) {
+                username = user.name;
+            } else {
+                // TODO log here, user id is wrong.
+            }
+        }
+    });
+
     var thinking = new ThinkingModel(
         {
-            title: req.body.title,
-            datestr: req.body.datestr,
-            content: req.body.content,
-            allcontent: req.body.allcontent,
             userid: req.body.userid,
-            gotbulbs: 0,
-            activity: req.body.activity,
-            tags: req.body.tags,
+            username: username,
+            content: req.body.content,
+            contentmd5: rawmd5,
+            datestr: req.body.datestr,
+            gotbulbs: 0
         }
     );
     thinking.save(function (err) {

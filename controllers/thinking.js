@@ -22,7 +22,7 @@ exports.thinking_create = function (req, res) {
     var username = "Unknown";
 
     // get user name and save it
-    UserModel.findOne({id : req.body.userid }, { '_id': 0, '__v': 0},function (err, user) {
+    UserModel.findOne({uid : req.body.userid }, { '_id': 0, '__v': 0},function (err, user) {
         if (err) {
             res.send(err);
         } else {

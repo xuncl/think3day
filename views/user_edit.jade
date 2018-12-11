@@ -4,13 +4,13 @@ block content
     h1= "确认您的昵称"
     div.newuser
         form( method="post")
-            input(name="_id", type="hidden", value=user._id.toHexString()) 
+            input(name="_id", type="hidden", value=user._id.toString()) 
             div
                 div
-                    span.label Title :
-                    input(type="text", name="title", id="editUserTitle", value=[title])
+                    span.label 编号（没有的话向群主索取） :
+                    input(type="text", name="code", id="editUserCode", value="0")
                 div
-                    span.label Name :
+                    span.label 群昵称（格式：昵称-城市-职业，不要有表情） :
                     input(type="text", name="name", id="editUserName", value=user.name)
                 div#editEmployeeSubmit
                     input(type="submit", value="Update")

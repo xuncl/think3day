@@ -57,26 +57,26 @@ router.delete('/:id', user_controller.user_delete_by_id);
 //   });
 // });
 
-// //update an employee
-// app.get('/employee/:id/edit', function(req, res) {
-//   employeeProvider.findById(req.param('_id'), function(error, employee) {
-//     res.render('employee_edit',
-//     { 
-//       title: employee.title,
-//       employee: employee
-//     });
-//   });
-// });
+//update an employee
+app.get('/user/:id/edit', function(req, res) {
+  employeeProvider.findById(req.param('_id'), function(error, employee) {
+    res.render('user_edit',
+    { 
+      title: employee.title,
+      employee: employee
+    });
+  });
+});
 
-// //save updated employee
-// app.post('/employee/:id/edit', function(req, res) {
-//   employeeProvider.update(req.param('_id'),{
-//     title: req.param('title'),
-//     name: req.param('name')
-//   }, function(error, docs) {
-//     res.redirect('/');
-//   });
-// });
+//save updated employee
+app.post('/user/:id/edit', function(req, res) {
+  employeeProvider.update(req.param('_id'),{
+    title: req.param('title'),
+    name: req.param('name')
+  }, function(error, docs) {
+    res.redirect('/');
+  });
+});
 
 // //delete an employee
 // app.post('/employee/:id/delete', function(req, res) {

@@ -8,7 +8,7 @@ router.post('/create', thinking_controller.thinking_create);
 
 router.get('/:id', thinking_controller.thinking_get_by_user_date);
 
-// router.get('/', thinking_controller.thinking_get_all_thinkings);
+router.get('/', thinking_controller.thinking_get_all_thinkings);
 
 // router.put('/:id', thinking_controller.thinking_update_by_user_date);
 

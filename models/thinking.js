@@ -17,5 +17,9 @@ let ThinkingSchema = new Schema({
 },
 { timestamps: true });
 
+ThinkingSchema.methods.findSameMd5 = function(cb) {
+    return this.model('Thinking').findOne({ contentmd5: this.contentmd5 }, cb);
+};
+
 // Export the model
 module.exports = mongoose.model('Thinking', ThinkingSchema);

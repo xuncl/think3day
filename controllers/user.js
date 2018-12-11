@@ -16,6 +16,7 @@ exports.user_info = function (req, res) {
                 var user = new UserModel(
                     {
                         id: u.openid,
+                        uid: u.openid,
                         name: u.nickname,
                         userinfo: u,
                         bulbs: 10,

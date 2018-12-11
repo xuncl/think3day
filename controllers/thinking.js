@@ -2,29 +2,45 @@
 var ThinkingModel = require('../models/thinking');
 var ObjectId = require('mongoose').Types.ObjectId;
 var MD5 = require('../libs/md5');
-var User = require('../models/user');
+var UserModel = require('../models/user');
+var getIp = require('../libs/util').getIp;
+const config = require('../config');
 
 exports.thinking_create = function (req, res) {
     
+    var ip = getIp(req);
+    if (ip == config.white_ip) {
+        res.send('Ip not in white list.');
+        return;
+    }
+    console.log("ip: " + ip);
+
     var raw = req.body.content;
 
-    var rawmd5 = MD5.hex_md5(raw);
+    var rawmd5 = MD5(raw);
 
     var username = "Unknown";
 
-    // get user name
+    // get user name and save it
     UserModel.findOne({id : req.body.userid }, { '_id': 0, '__v': 0},function (err, user) {
         if (err) {
             res.send(err);
         } else {
             if(user) {
                 username = user.name;
+                // console.log("user found: "+username);
             } else {
+                console.log("user not found: "+req.body.userid);
                 // TODO log here, user id is wrong.
             }
+            save_think(req, res, username, rawmd5);
         }
     });
 
+
+};
+
+function save_think(req, res, username, rawmd5){
     var thinking = new ThinkingModel(
         {
             userid: req.body.userid,
@@ -35,13 +51,20 @@ exports.thinking_create = function (req, res) {
             gotbulbs: 0
         }
     );
-    thinking.save(function (err) {
-        if (err) {
-            res.send('Thinking Not Created. '+ err);
-        }
-        res.send('Thinking Created successfully');
+    // afford duplication
+    thinking.findSameMd5(function(err, same_thinking) {
+        if (same_thinking){
+            res.send('Duplicated: Same thinking to '+username+' on '+req.body.datestr);
+        } else {
+            thinking.save(function (err) {
+                if (err) {
+                    res.send('Error: Thinking Not Created. '+ err);
+                }
+                res.send('Thinking Created successfully');
+            });
+        } 
     });
-};
+}
 
 exports.thinking_get_by_user_date = function (req, res) {
     ThinkingModel.findOne({userid : req.params.userid, datestr : req.params.datestr}, { '_id': 0, '__v': 0},function (err, thinking) {

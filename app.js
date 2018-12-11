@@ -21,6 +21,7 @@ createMenu();
 var wechatRouter = require('./routes/weixin');
 var authRouter = require('./routes/auth');
 var userRouter = require('./routes/user');
+var thinkingRouter = require('./routes/thinking');
 var tmRouter = require('./routes/tmessage');
 var indexRouter = require('./routes/index');
 
@@ -59,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/wechat', wechatRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
+app.use('/thinking', thinkingRouter);
 app.use('/tm',tmRouter);
 
 app.use('/', indexRouter);

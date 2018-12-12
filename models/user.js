@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 let UserSchema = new Schema({
     id: String,
     name: String,
-    uid: String,
+    code: String,
     userinfo: {
         openid: String,
         nickname: String,
@@ -30,8 +30,8 @@ UserSchema.methods.findSameOpenId = function(cb) {
     return this.model('User').findOne({ id: this.id }, cb);
 };
 
-UserSchema.methods.findSameUId = function(cb) {
-    return this.model('User').findOne({ uid: this.uid }, cb);
+UserSchema.methods.findSameCode = function(cb) {
+    return this.model('User').findOne({ code: this.code }, cb);
 };
 
 // Export the model

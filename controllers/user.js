@@ -16,7 +16,7 @@ exports.user_info = function (req, res) {
                 var user = new UserModel(
                     {
                         id: u.openid,
-                        uid: u.openid,
+                        code: u.openid,
                         name: u.nickname,
                         userinfo: u,
                         bulbs: 10,
@@ -35,7 +35,10 @@ exports.user_info = function (req, res) {
                             if (err) {
                                 res.send('User Not Created. '+ err);
                             }
-                            res.render('user', {userinfo: user_info, a:'User Created successfully'});
+                            res.render('user_edit',
+                            { 
+                              user: user
+                            });
                         });
                     } 
                 });
@@ -43,6 +46,23 @@ exports.user_info = function (req, res) {
         });
       });
 };
+
+
+exports.post_user_info = function (req, res) {
+    console.log(req.body.id);
+    console.log(req.body.name);
+    console.log(req.body.code);
+    UserModel.findOneAndUpdate({id : req.body.id }, { $set: { name: req.body.name, code: req.body.code }}, function (err, product) {
+        if (err) res.send('User not udpated. ' + err);
+        res.send('User udpated successfully.');
+    });
+};
+//   employeeProvider.update(req.param('_id'),{
+//     title: req.param('title'),
+//     name: req.param('name')
+//   }, function(error, docs) {
+//     res.redirect('/');
+//   });
 
 exports.user_create = function (req, res) {
     var user = new UserModel(
@@ -80,10 +100,23 @@ exports.user_get_all_users= function (req, res) {
 };
 
 exports.user_update_by_id= function (req, res) {
-    UserModel.findOneAndUpdate({id : req.params.id }, {$set: req.body}, function (err, product) {
-        if (err) res.send('User not udpated. ' + err);
-        res.send('User udpated successfully.');
+    // UserModel.findOneAndUpdate({id : req.params.id }, {$set: req.body}, function (err, product) {
+    //     if (err) res.send('User not udpated. ' + err);
+    //     res.send('User udpated successfully.');
+    // });
+    UserModel.findOne({id : req.params.id }, { '_id': 0, '__v': 0},function (err, user) {
+        if (err) res.send(err);    
+        user.save(function (err) {
+            if (err) {
+                res.send('User Not Created. '+ err);
+            }
+            res.render('user_edit',
+            { 
+              user: user
+            });
+        });
     });
+
 };
 
 exports.user_delete_by_id= function (req, res) {

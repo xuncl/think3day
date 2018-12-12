@@ -10,10 +10,10 @@ exports.thinking_create = function (req, res) {
     
     var ip = getIp(req);
     if (ip == config.white_ip) {
-        res.send('Ip not in white list.');
+        console.log("ip: " + ip);
+        res.render("403", {status:403, title:"403-无权限"});turn
         return;
     }
-    console.log("ip: " + ip);
 
     var raw = req.body.content;
 

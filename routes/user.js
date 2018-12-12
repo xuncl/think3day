@@ -7,6 +7,9 @@ var user_controller = require('../controllers/user');
 /* get user info */
 router.get('/getinfo', user_controller.user_info);
 
+/* post user info */
+router.post('/getinfo', user_controller.post_user_info);
+
 /* GET users listing. */
 router.get('/fetch', function(req, res, next) {
 
@@ -31,59 +34,13 @@ router.get('/fetch', function(req, res, next) {
 
 router.post('/create', user_controller.user_create);
 
-router.get('/:id', user_controller.user_get_by_id);
+// router.get('/id/:id', user_controller.user_get_by_id);
+router.get('/id/:id', user_controller.user_update_by_id);
 
 router.get('/', user_controller.user_get_all_users);
 
-router.put('/:id', user_controller.user_update_by_id);
+router.put('/id/:id', user_controller.user_update_by_id);
 
-router.delete('/:id', user_controller.user_delete_by_id);
-
-
-// //new employee
-// app.get('/employee/new', function(req, res) {
-//   res.render('employee_new', {
-//       title: 'New Employee'
-//   });
-// });
-
-// //save new employee
-// app.post('/employee/new', function(req, res){
-//   employeeProvider.save({
-//       title: req.param('title'),
-//       name: req.param('name')
-//   }, function( error, docs) {
-//       res.redirect('/');
-//   });
-// });
-
-//update an employee
-app.get('/user/:id/edit', function(req, res) {
-  employeeProvider.findById(req.param('_id'), function(error, employee) {
-    res.render('user_edit',
-    { 
-      title: employee.title,
-      employee: employee
-    });
-  });
-});
-
-//save updated employee
-app.post('/user/:id/edit', function(req, res) {
-  employeeProvider.update(req.param('_id'),{
-    title: req.param('title'),
-    name: req.param('name')
-  }, function(error, docs) {
-    res.redirect('/');
-  });
-});
-
-// //delete an employee
-// app.post('/employee/:id/delete', function(req, res) {
-//   employeeProvider.delete(req.param('_id'), function(error, docs) {
-//     res.redirect('/');
-//   });
-// });
-
+router.delete('/id/:id', user_controller.user_delete_by_id);
 
 module.exports = router;

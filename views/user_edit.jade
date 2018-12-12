@@ -3,8 +3,8 @@ extends layout
 block content
     h1= "确认您的昵称"
     div.newuser
-        form( method="post")
-            input(name="_id", type="hidden", value=user._id.toString()) 
+        form(action='/user/getinfo', method="post")
+            input(name="id", type="hidden", value=user.id) 
             div
                 div
                     span.label 编号（没有的话向群主索取） :
@@ -12,6 +12,6 @@ block content
                 div
                     span.label 群昵称（格式：昵称-城市-职业，不要有表情） :
                     input(type="text", name="name", id="editUserName", value=user.name)
-                div#editEmployeeSubmit
+                div
                     input(type="submit", value="Update")
         a(href="/user/done")!= "Back"

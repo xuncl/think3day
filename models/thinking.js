@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 let ThinkingSchema = new Schema({
     id: String,
-    userid: String,
+    code: String,
     username: String,
     content: String,
     contentmd5: String,

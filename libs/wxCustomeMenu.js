@@ -14,19 +14,15 @@ var menus = {
       "sub_button": [
         {
           "type": "view",
-          "name": "授权登录",
-          "url": "http://www.think3day.com/auth"
-        },
-        {
-          "type": "view",
-          "name": "授权登录2",
+          "name": "注册",
           "url": "http://www.think3day.com/user/fetch"
         },
         {
           "type": "view",
-          "name": "测试模板消息",
+          "name": "测试",
           "url": "http://www.think3day.com/tm/test"
-        }]
+        }
+      ]
     }]
 };
 

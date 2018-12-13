@@ -1,21 +1,42 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
  
-// 插入
-MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("test");
-    var myobj =  [
-        { name: 'xuncl', url: 'https://www.xuncl.com', type: 'cn'},
-        { name: 'Google', url: 'https://www.google.com', type: 'en'},
-        { name: 'Facebook', url: 'https://www.google.com', type: 'en'}
-       ];
-    dbo.collection("xuncl").insertMany(myobj, function(err, res) {
-        if (err) throw err;
-        console.log("插入的文档数量为: " + res.insertedCount);
-        db.close();
+var schedule = require('node-schedule');
+
+function scheduleRecurrenceRule(){
+
+    var rule = new schedule.RecurrenceRule();
+    // rule.dayOfWeek = 2;
+    // rule.month = 3;
+    // rule.dayOfMonth = 1;
+    // rule.hour = 1;
+    // rule.minute = 42;
+ 
+    rule.second = 0;
+    
+    schedule.scheduleJob(rule, function(){
+       console.log(new Date().toString());
     });
-});
+   
+}
+
+scheduleRecurrenceRule();
+
+// // 插入
+// MongoClient.connect(url, function(err, db) {
+//     if (err) throw err;
+//     var dbo = db.db("test");
+//     var myobj =  [
+//         { name: 'xuncl', url: 'https://www.xuncl.com', type: 'cn'},
+//         { name: 'Google', url: 'https://www.google.com', type: 'en'},
+//         { name: 'Facebook', url: 'https://www.google.com', type: 'en'}
+//        ];
+//     dbo.collection("xuncl").insertMany(myobj, function(err, res) {
+//         if (err) throw err;
+//         console.log("插入的文档数量为: " + res.insertedCount);
+//         db.close();
+//     });
+// });
 
 
 // 查询

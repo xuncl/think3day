@@ -1,63 +1,20 @@
  /* jshint esversion: 6 */
- const router = require('express').Router();
- const fs = require('fs');
- const config = require('../config');
- const request = require('request');
+const router = require('express').Router();
+var tmessage_controller = require('../controllers/tmessage');
+var UserModel = require('../models/user');
  
- router.get('/test', function(req, res, next) {
-
-    sendTMessage();
-    res.send('message sent.');
-    
+router.get('/normal', function(req, res) {
+  UserModel.findOne({code : req.params.code }, { '_id': 0, '__v': 0},function (err, user) {
+      if (err) res.send(err);
+      tmessage_controller.sendNormalMessage(user);
   });
+});
 
-  function sendTMessage() {
-    var token = fs.readFileSync('./token').toString();
-    var posturl = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+token;
-    var tmdata =  {
-        touser: config.test_openid,
-        template_id:"-S0BOHCHx5Xy7xYWt6vJxyuFQ1Ei2MH1suLog2DnufM",
-        url:"http://www.baidu.com/",
-        data:{
-                first: {
-                    value:"三日一思打卡状态：",
-                    color:"#173177"
-                },
-                keyword1:{
-                    value:"思考社群实验室",
-                    color:"#173177"
-                },
-                keyword2: {
-                    value:"已打卡",
-                    color:"#173177"
-                },
-                keyword3: {
-                    value:"2018-11-30 11:00",
-                    color:"#173177"
-                },
-                remark:{
-                    value:"您已完成本检查点，点击生成签到图~",
-                    color:"#0e0091"
-                }
-        }
-    };
+router.get('/test', function(req, res) {
+  UserModel.findOne({code : 100 }, { '_id': 0, '__v': 0},function (err, user) {
+      if (err) res.send(err);
+      tmessage_controller.sendNormalMessage(user);
+  });
+});
 
-    let options = {
-      url: posturl,
-      form: JSON.stringify(tmdata),
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    };
-    
-    request.post(options, function (err, res, body) {
-      if (err) {
-        console.log(err);
-      }else {
-        console.log(body);
-      }
-    });
-    
-  }
-
- module.exports = router;
+module.exports = router;

@@ -14,7 +14,7 @@ router.post('/getinfo', user_controller.post_user_info);
 router.get('/fetch', function(req, res, next) {
 
   // res.send('respond with a resource user');
-
+  // 获取用户信息，验证并回调至getinfo
   var reqUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?';
   var params = {
     appid: config.appId,
@@ -32,15 +32,14 @@ router.get('/fetch', function(req, res, next) {
 
 /* CRUD user APIs. */
 
-router.post('/create', user_controller.user_create);
+// router.post('/create', user_controller.user_create);
 
 // router.get('/id/:id', user_controller.user_get_by_id);
-router.get('/id/:id', user_controller.user_update_by_id);
 
 router.get('/', user_controller.user_get_all_users);
 
-router.put('/id/:id', user_controller.user_update_by_id);
+// router.put('/id/:id', user_controller.user_update_by_id);
 
-router.delete('/id/:id', user_controller.user_delete_by_id);
+// router.delete('/id/:id', user_controller.user_delete_by_id);
 
 module.exports = router;

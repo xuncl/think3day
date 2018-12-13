@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let ActioningSchema = new Schema({
-    userid: String,
+    code: String,
     action: String,
     object: String,
     thinkingid: String,

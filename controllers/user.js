@@ -5,6 +5,7 @@ var getToken = require('../websdk/getWebToken');
 var getUserInfo = require('../websdk/getWebUserInfo');
 
 exports.user_info = function (req, res) {
+    // 获取用户的userinfo
     getToken(req.query.code)
       .then(function (data) {
         return JSON.parse(data);
@@ -20,6 +21,7 @@ exports.user_info = function (req, res) {
                         name: u.nickname,
                         userinfo: u,
                         bulbs: 10,
+                        isdone: 0,
                         consecutive: 0,
                         isfrozen: 0,
                         isleaving: 0,
@@ -27,6 +29,7 @@ exports.user_info = function (req, res) {
                         medals: 0,
                     }
                 );
+                // 去重并保存
                 user.findSameOpenId(function(err, same_user) {
                     if (same_user){
                         res.send('Welcome back!');
@@ -35,6 +38,7 @@ exports.user_info = function (req, res) {
                             if (err) {
                                 res.send('User Not Created. '+ err);
                             }
+                            // 跳转页面让用户自己填编号
                             res.render('user_edit',
                             { 
                               user: user
@@ -49,12 +53,9 @@ exports.user_info = function (req, res) {
 
 
 exports.post_user_info = function (req, res) {
-    console.log(req.body.id);
-    console.log(req.body.name);
-    console.log(req.body.code);
     UserModel.findOneAndUpdate({id : req.body.id }, { $set: { name: req.body.name, code: req.body.code }}, function (err, product) {
-        if (err) res.send('User not udpated. ' + err);
-        res.send('User udpated successfully.');
+        if (err) res.send('出现问题，请截图给群主。 ' + err);
+        res.send('注册成功，请关闭此页。');
     });
 };
 //   employeeProvider.update(req.param('_id'),{

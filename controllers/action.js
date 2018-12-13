@@ -13,7 +13,7 @@ exports.action_create = function (req, res) {
     var username = "Unknown";
 
     // get user name
-    UserModel.findOne({id : req.body.userid }, { '_id': 0, '__v': 0},function (err, user) {
+    UserModel.findOne({id : req.body.code }, { '_id': 0, '__v': 0},function (err, user) {
         if (err) {
             res.send(err);
         } else {
@@ -27,7 +27,7 @@ exports.action_create = function (req, res) {
 
     var action = new ActionModel(
         {
-            userid: req.body.userid,
+            code: req.body.code,
             username: username,
             content: req.body.content,
             contentmd5: rawmd5,
@@ -44,7 +44,7 @@ exports.action_create = function (req, res) {
 };
 
 exports.action_get_by_user_date = function (req, res) {
-    ActionModel.findOne({userid : req.params.userid, datestr : req.params.datestr}, { '_id': 0, '__v': 0},function (err, action) {
+    ActionModel.findOne({code : req.params.code, datestr : req.params.datestr}, { '_id': 0, '__v': 0},function (err, action) {
         if (err) res.send(err);
         res.send(action);
     });
@@ -58,14 +58,14 @@ exports.action_get_all_actions= function (req, res) {
 };
 
 exports.action_update_by_user_date= function (req, res) {
-    ActionModel.findOneAndUpdate({userid : req.params.userid, datestr : req.params.datestr}, {$set: req.body}, function (err, product) {
+    ActionModel.findOneAndUpdate({code : req.params.code, datestr : req.params.datestr}, {$set: req.body}, function (err, product) {
         if (err) res.send('Action not udpated. ' + err);
         res.send('Action udpated successfully.');
     });
 };
 
 exports.action_delete_by_user_date= function (req, res) {
-    ActionModel.findOneAndDelete({userid : req.params.userid, datestr : req.params.datestr}, function (err, product) {
+    ActionModel.findOneAndDelete({code : req.params.code, datestr : req.params.datestr}, function (err, product) {
         if (err) res.send('Action not deleted. ' + err);
         res.send('Action deleted successfully.');
     });

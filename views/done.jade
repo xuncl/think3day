@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    div.container
+        div.page.msg_success.js_show
+            div.weiui-msg(style="padding-top: 36px;text-align: center;")
+                div.weui-msg__icon-area
+                    i.weui-icon-success.weui-icon_msg
+                div.weui-msg__text-area
+                    h2.weui-msg__title 操作成功
+                p.weui-msg__desc= desc

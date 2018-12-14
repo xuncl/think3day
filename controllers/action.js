@@ -15,7 +15,7 @@ exports.action_create = function (req, res) {
     // get user name
     UserModel.findOne({id : req.body.code },function (err, user) {
         if (err) {
-            res.send(err);
+            res.render('error', {error: err});
         } else {
             if(user) {
                 username = user.name;

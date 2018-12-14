@@ -1,6 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title} & this is me
-  img(src='/images/20181028201001.jpg')
+    div.container
+        h1.page__title= title
+        p.page__desc Welcome to #{title} & this is me
+        span.weui-gallery__img(style="background-image: url(/images/20181028201001.jpg);")
+        //- img(src='/images/20181028201001.jpg')

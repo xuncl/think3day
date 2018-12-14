@@ -31,7 +31,7 @@ exports.sendPreCheckMessage = function(user) {
                 color:"#173177"
             },
             remark:{
-                value:"花五分钟，记下最近的所思所得吧~",
+                value:"花几分钟，记下最近的所思所得吧~",
                 color:"#0e0091"
             }
         }
@@ -40,7 +40,7 @@ exports.sendPreCheckMessage = function(user) {
 };
 
 
-// 注册成功提醒
+// 注册成功提醒（未使用）
 exports.sendRegisterMessage = function(user) {
     var tmdata =  {
         // touser: config.test_openid,

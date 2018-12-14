@@ -1,16 +1,22 @@
 extends layout
 
 block content
-    h1= "确认您的昵称"
-    div.newuser
-        form(action='/user/getinfo', method="post")
-            input(name="id", type="hidden", value=user.id) 
-            div
-                div
-                    span.label 编号（没有的话向群主索取） :
-                    input(type="text", name="code", id="editUserCode", value="0")
-                div
-                    span.label 群昵称（格式：昵称-城市-职业，不要有表情） :
-                    input(type="text", name="name", id="editUserName", value=user.name)
-                div
-                    input(type="submit", value="Update")
+    div.container
+        div.page.input.js_show
+            div.weui-cells__title(style="padding-top: 36px") 请填写以下信息：
+            form(action='/user/getinfo', method="post")
+                input(name="id", type="hidden", value=user.id) 
+                div.weui-cells.weui-cells_form(style="padding-top: 12px;text-align: center;")
+                    div.weui-cell
+                        div.weui-cell__hd
+                            label.weui-label 编号
+                        div.weui-cell__bd
+                            input.weui-input(type="number", pattern="[0-9]*", name="code", id="editUserCode", placeholder="请输入编号（从群主获取）")
+                    div.weui-cell
+                        div.weui-cell__hd
+                            label.weui-label 群昵称
+                        div.weui-cell__bd
+                            input.weui-input(type="text", name="name", id="editUserName", placeholder="昵称-城市-职业（不要有表情）")
+                div.weui-cells__tips 提交信息成功后，才可以收到提醒。
+                div.weui-btn-area
+                    a.weui-btn.weui-btn_primary(type="submit") 确定

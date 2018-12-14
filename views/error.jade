@@ -1,6 +1,15 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+    h1=desc
+    div.container
+        div.page.msg_success.js_show
+            h2=error.status
+            div.weiui-msg(style="padding-top: 36px;text-align: center;")
+                div.weui-msg__icon-area
+                    i.weui-icon-warn.weui-icon_msg
+                div.weui-msg__text-area
+                    h2.weui-msg__title 发生错误！
+                    h3.weui-msg__desc 方便的话，截个屏发给群主，以便排查问题
+                p.weui-msg__desc=desc
+                pre(style="word-wrap: break-word;word-break: break-all;") #{error.stack}

@@ -78,13 +78,16 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error',{error: err});
 });
 
 // 设置定时提醒
 const remind = require('./libs/remind');
 const schedule = require('./libs/schedule');
+// 检查点当日提醒
 schedule.schedule3DayRule(remind.send_pre_remind_for_all);
+// 检查点次日更新
+schedule.schedule3DayNextRule(remind.refresh_checkpoint_for_all);
 
 // edit in www file.
 // app.listen(80);

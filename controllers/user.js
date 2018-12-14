@@ -31,17 +31,18 @@ exports.user_info = function (req, res) {
                 );
                 // 去重并保存
                 user.findSameOpenId(function(err, same_user) {
-                    if (same_user){
-                        res.send('Welcome back!');
+                    if (same_user && same_user.code){
+                        res.render('done',{desc: '您已注册，如要重新填写，请联系群主修改。', title: '绑定成功'});
                     } else {
                         user.save(function (err) {
                             if (err) {
-                                res.send('User Not Created. '+ err);
+                                res.render('error',{error: err, desc: "用户保存出错！"});
                             }
                             // 跳转页面让用户自己填编号
                             res.render('user_edit',
                             { 
-                              user: user
+                              user: user,
+                              title: '三日一思'
                             });
                         });
                     } 
@@ -54,8 +55,10 @@ exports.user_info = function (req, res) {
 
 exports.post_user_info = function (req, res) {
     UserModel.findOneAndUpdate({id : req.body.id }, { $set: { name: req.body.name, code: req.body.code }}, function (err, product) {
-        if (err) res.send('出现问题，请截图给群主。 ' + err);
-        res.send('注册成功，请关闭此页。');
+        if (err) {
+            res.render('error',{ desc: "用户更新出错！", title: "Error", error: err});
+        } else
+            res.render('done',{desc: '注册成功，请关闭此页。', title: '绑定成功'});
     });
 };
 
@@ -107,7 +110,8 @@ exports.user_update_by_id= function (req, res) {
             }
             res.render('user_edit',
             { 
-              user: user
+              user: user,
+              title: "三日一思"
             });
         });
     });

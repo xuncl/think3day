@@ -31,19 +31,20 @@ exports.user_info = function (req, res) {
                 );
                 // 去重并保存
                 user.findSameOpenId(function(err, same_user) {
-                    if (same_user && same_user.code){
-                        res.render('done',{desc: '您已注册，如要重新填写，请联系群主修改。', title: '绑定成功'});
+                    if (same_user){ // 用户数据已入库
+                        if (same_user.code!=same_user.id){ // 已注册
+                            res.render('done',{desc: '您已注册，如要重新填写，请联系群主修改。', title: '绑定成功'});
+                        } else { // 有数据但是未注册
+                            // 跳转页面让用户自己填编号
+                            res.render('user_edit', {user: user, title: '三日一思'});
+                        }
                     } else {
                         user.save(function (err) {
                             if (err) {
                                 res.render('error',{error: err, desc: "用户保存出错！"});
                             }
                             // 跳转页面让用户自己填编号
-                            res.render('user_edit',
-                            { 
-                              user: user,
-                              title: '三日一思'
-                            });
+                            res.render('user_edit', {user: user, title: '三日一思'});
                         });
                     } 
                 });
@@ -54,7 +55,8 @@ exports.user_info = function (req, res) {
 
 
 exports.post_user_info = function (req, res) {
-    UserModel.findOneAndUpdate({id : req.body.id }, { $set: { name: req.body.name, code: req.body.code }}, function (err, product) {
+    var nickname = req.body.name1 + '-' + req.body.name2 + '-' + req.body.name3;
+    UserModel.findOneAndUpdate({id : req.body.id }, { $set: { name: nickname, code: req.body.code }}, function (err, product) {
         if (err) {
             res.render('error',{ desc: "用户更新出错！", title: "Error", error: err});
         } else

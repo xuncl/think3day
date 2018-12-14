@@ -34,14 +34,14 @@ router.get('/fetch', function(req, res, next) {
 
 router.get('/test', function(req, res) {
   var user = {id: -1};
-  req.body.id = 3333;
-  console.log(req.body.id);
-  user_controller.post_user_info(req, res);
-  // res.render('user_edit',
-  // { 
-  //   user: user,
-  //   title: '三日一思'
-  // });
+  // req.body.id = 3333;
+  // console.log(req.body.id);
+  // user_controller.post_user_info(req, res);
+  res.render('user_edit',
+  { 
+    user: user,
+    title: '三日一思'
+  });
 
   // res.render('done',{desc: 'Welcome back!'});
 });

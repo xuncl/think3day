@@ -14,9 +14,20 @@ block content
                             input.weui-input(type="number", pattern="[0-9]*", name="code", id="editUserCode", placeholder="请输入编号（从群主获取）")
                     div.weui-cell
                         div.weui-cell__hd
-                            label.weui-label 群昵称
+                            label.weui-label 昵称
                         div.weui-cell__bd
-                            input.weui-input(type="text", name="name", id="editUserName", placeholder="昵称-城市-职业（不要有表情）")
-                div.weui-cells__tips 提交信息成功后，才可以收到提醒。
+                            input.weui-input(type="text", name="name1", id="editUserName1", placeholder="昵称（不要有表情）")
+                    div.weui-cell
+                        div.weui-cell__hd
+                            label.weui-label 城市
+                        div.weui-cell__bd
+                            input.weui-input(type="text", name="name2", id="editUserName2", placeholder="城市（不要有表情）")
+                    div.weui-cell
+                        div.weui-cell__hd
+                            label.weui-label 职业
+                        div.weui-cell__bd
+                            input.weui-input(type="text", name="name3", id="editUserName3", placeholder="职业（不要有表情）")
+                div.weui-cells__tips 注册后，您提交的思考会以“昵称-城市-职业”为签名显示。
+                div.weui-cells__tips 提交信息成功后，才可以正常收到提醒。
                 div.weui-btn-area
-                    a.weui-btn.weui-btn_primary(type="submit") 确定
+                    input.weui-btn.weui-btn_primary(type="submit" value="确定")

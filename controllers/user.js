@@ -58,12 +58,6 @@ exports.post_user_info = function (req, res) {
         res.send('注册成功，请关闭此页。');
     });
 };
-//   employeeProvider.update(req.param('_id'),{
-//     title: req.param('title'),
-//     name: req.param('name')
-//   }, function(error, docs) {
-//     res.redirect('/');
-//   });
 
 exports.user_create = function (req, res) {
     var user = new UserModel(
@@ -87,14 +81,14 @@ exports.user_create = function (req, res) {
 };
 
 exports.user_get_by_id = function (req, res) {
-    UserModel.findOne({id : req.params.id }, { '_id': 0, '__v': 0},function (err, user) {
+    UserModel.findOne({id : req.params.id }, function (err, user) {
         if (err) res.send(err);
         res.send(user);
     });
 };
 
 exports.user_get_all_users= function (req, res) {
-    UserModel.find({},{ '_id': 0, '__v': 0} , function (err, user) {
+    UserModel.find({}, function (err, user) {
         if (err) res.send(err);
         res.send(user);
     });
@@ -105,7 +99,7 @@ exports.user_update_by_id= function (req, res) {
     //     if (err) res.send('User not udpated. ' + err);
     //     res.send('User udpated successfully.');
     // });
-    UserModel.findOne({id : req.params.id }, { '_id': 0, '__v': 0},function (err, user) {
+    UserModel.findOne({id : req.params.id }, function (err, user) {
         if (err) res.send(err);    
         user.save(function (err) {
             if (err) {
@@ -117,7 +111,30 @@ exports.user_update_by_id= function (req, res) {
             });
         });
     });
+};
 
+// 完成检查点后更新user
+exports.checkpoint_completed_update= function (user) {
+    user.isdone = 0;
+    user.bulbs += 1;
+    user.consecutive += 1;
+    user.save(function (err) {
+        if (err) {
+            console.log('User ' + user.code + ' Not Created. '+ err);
+        }
+    });
+};
+
+// 错过检查点后更新user
+exports.checkpoint_uncompleted_update= function (user) {
+    user.isdone = 0;
+    user.bulbs -= 1;
+    user.consecutive = 0;
+    user.save(function (err) {
+        if (err) {
+            console.log('User ' + user.code + ' Not Saved. '+ err);
+        }
+    });
 };
 
 exports.user_delete_by_id= function (req, res) {

@@ -1,26 +1,94 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
  
+var UserModel = require('./models/user');
+var tmessage_controller = require('./controllers/tmessage');
 var schedule = require('node-schedule');
+const mongoose = require('mongoose');
+const config = require('./config');
 
-function scheduleRecurrenceRule(){
+// Set up mongoose connection
+let dev_db_url = 'mongodb://'+config.mongohost+':'+config.mongoport+'/test';
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-    var rule = new schedule.RecurrenceRule();
-    // rule.dayOfWeek = 2;
-    // rule.month = 3;
-    // rule.dayOfMonth = 1;
-    // rule.hour = 1;
-    // rule.minute = 42;
- 
-    rule.second = 0;
+var u = new UserModel();
+
+UserModel.find({}, (err, users) => {
+    if (err) {
+        console.log(err);
+    }
     
-    schedule.scheduleJob(rule, function(){
-       console.log(new Date().toString());
-    });
-   
-}
+    // console.log("users:");
+    // console.log(users[0]);
+    // var us = JSON.parse(''+users);
+    // console.log(Array.isArray(users));
+    var len = users.length;
+    for(var i = 0; i<len; i++){
+        user = users[i];
+        // console.log("user"+JSON.stringify(users[i]));
+        user.isdone = 1;
+        // console.log("user888888==>"+user);
+        // tmessage_controller.sendPreCheckMessage(user);
+        user.save(function(err, doc){
+            if (err) {
+                console.log('save error:' + err);
+            } else console.log('save sucess \n' + doc);
+        });
+    }
+    console.log("func end");
+    return;
+});
 
-scheduleRecurrenceRule();
+console.log("********************************");
+console.log("********************************");
+console.log("********************************");
+console.log("********************************");
+console.log("********************************");
+console.log("********************************");
+console.log("********************************");
+console.log("********************************");
+// console.log(u);
+
+
+// function scheduleRecurrenceRule(){
+
+//     var rule = new schedule.RecurrenceRule();
+//     // rule.dayOfWeek = 2;
+//     // rule.month = 3;
+//     // rule.dayOfMonth = 1;
+//     // rule.hour = 1;
+//     // rule.minute = 42;
+ 
+//     rule.second = 0;
+    
+//     schedule.scheduleJob(rule, function(){
+//        console.log(new Date().toString());
+//     });
+   
+// }
+// Date.prototype.Format = function (fmt) { //author: meizz
+//     var o = {
+//         "M+": this.getMonth() + 1, //月份
+//         "d+": this.getDate(), //日
+//         "h+": this.getHours(), //小时
+//         "m+": this.getMinutes(), //分
+//         "s+": this.getSeconds(), //秒
+//         "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+//         "S": this.getMilliseconds() //毫秒
+//     };
+//     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+//     for (var k in o)
+//         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+//     return fmt;
+// };
+
+// var time2 = new Date().Format("yyyy-MM-dd hh:mm:ss");
+// console.log(time2);
+// scheduleRecurrenceRule();
 
 // // 插入
 // MongoClient.connect(url, function(err, db) {

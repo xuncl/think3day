@@ -81,9 +81,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// 设置定时提醒
+const remind = require('./libs/remind');
+const schedule = require('./libs/schedule');
+schedule.schedule3DayRule(remind.send_pre_remind_for_all);
+
 // edit in www file.
 // app.listen(80);
 console.log('Its running');
 
 module.exports = app;
+
 

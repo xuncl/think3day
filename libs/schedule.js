@@ -10,11 +10,11 @@ exports.schedule3DayRule = function(cb){
     // rule.hour = 1;
     // rule.minute = 42;
     rule.dayOfMonth = [3, 6, 9, 13, 16, 19, 23, 26, 29];
-    rule.hour = 20; // 晚上八点发通知
-    rule.minute = 0;
+    rule.hour = 10; // 晚上八点发通知
+    rule.minute = 55;
     
     schedule.scheduleJob(rule, function(){
-       console.log('scheduleRecurrenceRule:' + new Date());
+       console.log('schedule3DayRule:' + new Date());
        cb();
     });
 };
@@ -26,7 +26,7 @@ exports.scheduleEverydayRule = function(cb){
     rule.minute = 0;
     
     schedule.scheduleJob(rule, function(){
-       console.log('scheduleRecurrenceRule:' + new Date());
+       console.log('scheduleEverydayRule:' + new Date());
        cb();
     });
 };

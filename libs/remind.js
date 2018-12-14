@@ -1,25 +1,41 @@
-
+ /* jshint esversion: 6 */
 var UserModel = require('../models/user');
+var tmessage_controller = require('../controllers/tmessage');
+var user_controller = require('../controllers/user');
 
-exports.send_remind_for_all= function (req, res) {
-    UserModel.find({},{ '_id': 0, '__v': 0} , function (err, users) {
+// 检查点当天提醒
+exports.send_pre_remind_for_all= function () {
+    var u = UserModel.find({isfrozen: 0, isleaving: 0}, function (err, users) {
         if (err) {
-            res.send(err);
+            console.log(err);
             return;
         }
-        for(var user in users){
+        var len = users.length;
+        for(var i = 0; i<len; i++){
+            user = users[i];
             if (!user.isdone){
-                // var reqUrl = 'http://www.think3day.com/tm/beforeCheck?';
-                // var params = {
-                //   code: code,
-                // };
-                // var url = reqUrl+qs.stringify(params);
-                // res.redirect(url);
-                // TODO 
+                tmessage_controller.sendPreCheckMessage(user);
             }
         }
     });
 };
 
-function send_remind(user){
-} 
+// 刷新所有
+exports.refresh_checkpoint_for_all= function () {
+    var u = UserModel.find({isfrozen: 0, isleaving: 0}, function (err, users) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        var len = users.length;
+        for(var i = 0; i<len; i++){
+            user = users[i];
+            if (user.isdone){
+                user_controller.checkpoint_completed_update(user);
+            } else {
+                user_controller.checkpoint_uncompleted_update(user);
+            }
+        }
+    });
+};
+

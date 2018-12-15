@@ -88,6 +88,8 @@ const schedule = require('./libs/schedule');
 schedule.schedule3DayRule(remind.send_pre_remind_for_all);
 // 检查点次日更新
 schedule.schedule3DayNextRule(remind.refresh_checkpoint_for_all);
+// 每日即将出局提醒
+schedule.scheduleEverydayRule(remind.send_dead_remind_for_all);
 
 // edit in www file.
 // app.listen(80);

@@ -72,6 +72,7 @@ function save_think(req, res, user, rawmd5){
                 if (user.isdone) {
                     user.isdone += 1;
                 } else user.isdone = 1;
+                user.bulbs += 1;
                 user.save(function(err, user){
                     if (err) {
                         console.log('save error:' + err);

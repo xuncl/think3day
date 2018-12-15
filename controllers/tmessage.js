@@ -39,6 +39,42 @@ exports.sendPreCheckMessage = function(user) {
     sendMessagebyTemplate(user, tmdata);
 };
 
+// 死线前的提醒
+exports.sendDeadlineMessage = function(user) {
+    var tmdata =  {
+        // touser: config.test_openid,
+        touser: user.id,
+        template_id:"m2eom0Dedvt6eyKCkymL-kPEuEJ6A-omkatwJhwzATo",
+        // url:"http://www.baidu.com/",
+        data:{
+            first: {
+                value:"【注意】，你当前的灯泡数为0，灯泡数为负时会被移出群组！",
+                color:"#173177"
+            },
+            // 任务名称
+            keyword1:{
+                value:"保持灯泡数目在0以上。",
+                color:"#173177"
+            },
+            // 当前状态
+            keyword2: {
+                value:"出局临界点",
+                color:"#173177"
+            },
+            // 结束时间
+            keyword3: {
+                value:""+new Date().Format("yyyy-MM-dd")+" 23:59",
+                color:"#173177"
+            },
+            remark:{
+                value:"赶紧发一次思考吧，内容长短不限，养成习惯最重要！",
+                color:"#0e0091"
+            }
+        }
+    };
+    sendMessagebyTemplate(user, tmdata);
+};
+
 
 // 注册成功提醒（未使用）
 exports.sendRegisterMessage = function(user) {
@@ -69,6 +105,7 @@ exports.sendRegisterMessage = function(user) {
     sendMessagebyTemplate(user, tmdata);
 };
 
+/* 正常打卡提醒 */
 exports.sendNormalMessage = function(user) {
     var tmdata =  {
         // touser: config.test_openid,
@@ -101,6 +138,7 @@ exports.sendNormalMessage = function(user) {
     sendMessagebyTemplate(user, tmdata);
 };
 
+/* 发送模板消息的方法 */
 function sendMessagebyTemplate(user, tmdata){
     var token = fs.readFileSync('./token').toString();
     var posturl = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+token;

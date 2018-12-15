@@ -10,11 +10,4 @@ router.get('/normal', function(req, res) {
   });
 });
 
-router.get('/test', function(req, res) {
-  UserModel.findOne({code : 100 }, function (err, user) {
-      if (err) res.send(err);
-      tmessage_controller.sendNormalMessage(user);
-  });
-});
-
 module.exports = router;

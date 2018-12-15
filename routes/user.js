@@ -10,7 +10,7 @@ router.get('/getinfo', user_controller.user_info);
 /* post user info */
 router.post('/getinfo', user_controller.post_user_info);
 
-/* GET users listing. */
+/* redirect to users info. */
 router.get('/fetch', function(req, res, next) {
 
   // res.send('respond with a resource user');
@@ -31,19 +31,40 @@ router.get('/fetch', function(req, res, next) {
 });
 
 
+/* get user page */
+router.get('/getpage', user_controller.user_page);
+
+/* redirect to users page. */
+router.get('/fetchpage', function(req, res, next) {
+  // 获取用户信息，验证并回调至getpage
+  var reqUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?';
+  var params = {
+    appid: config.appId,
+    redirect_uri: 'http://www.think3day.com/user/getpage',
+    response_type: 'code',
+    scope: 'snsapi_userinfo',
+    status: '0',
+  };
+
+  var url = reqUrl+qs.stringify(params)+'#wechat_redirect';
+  res.redirect(url);
+
+});
+
+
 
 router.get('/test', function(req, res) {
   var user = {id: -1};
   // req.body.id = 3333;
   // console.log(req.body.id);
   // user_controller.post_user_info(req, res);
-  res.render('user_edit',
+  res.render('done',{desc: 'Welcome back!'});
+  res.render('user_show',
   { 
     user: user,
     title: '三日一思'
   });
 
-  // res.render('done',{desc: 'Welcome back!'});
 });
 
 /* CRUD user APIs. */
@@ -52,7 +73,7 @@ router.get('/test', function(req, res) {
 
 // router.get('/id/:id', user_controller.user_get_by_id);
 
-router.get('/', user_controller.user_get_all_users);
+// router.get('/', user_controller.user_get_all_users);
 
 // router.put('/id/:id', user_controller.user_update_by_id);
 

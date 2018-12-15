@@ -149,3 +149,21 @@ exports.user_delete_by_id= function (req, res) {
         res.send('User deleted successfully.');
     });
 };
+
+/* 用户主页 */
+exports.user_page = function (req, res) {
+    // 获取用户的userinfo
+    getToken(req.query.code).then(function (data) {
+        return JSON.parse(data);
+    }).then(function (data) {
+        getUserInfo(data.access_token, data.openid).then(user_info => {
+            var u = JSON.parse(user_info);
+            if (u.openid) {
+                UserModel.findOne({id : req.params.id }, function (err, user) {
+                    if (err) res.render('error',{ desc: "用户主页出错！", title: "Error", error: err});
+                    res.render('user_show', {user: user, title: '个人主页'});
+                });
+            }
+        });
+    });
+};

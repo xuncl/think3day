@@ -18,7 +18,7 @@ exports.schedule3DayRule = function(cb){
 exports.schedule3DayNextRule = function(cb){
     var rule = new schedule.RecurrenceRule();
     rule.date  = [4, 7, 10, 14, 17, 20, 24, 27, 30];
-    rule.hour = 20; // 八点发通知
+    rule.hour = 4; // 八点发通知
     rule.minute = 0;
     
     schedule.scheduleJob(rule, function(){

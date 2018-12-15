@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    div.container
+        div.page.input.js_show
+            div.weui-cells__title(style="padding-top: 36px") 个人信息：
+            div.weui-cells.weui-cells_form(style="padding-top: 12px;text-align: center;")
+                input(name="id", type="hidden", value=user.id) 
+                div.weui-cell
+                    div.weui-cell__hd
+                        label.weui-label 编号
+                    div.weui-cell__bd
+                        p=user.code
+                div.weui-cell
+                    div.weui-cell__hd
+                        label.weui-label 昵称
+                    div.weui-cell__bd
+                        p=user.name
+                div.weui-cell
+                    div.weui-cell__hd
+                        label.weui-label 灯泡数
+                    div.weui-cell__bd
+                        p=user.bulbs
+                div.weui-cell
+                    div.weui-cell__hd
+                        label.weui-label 当前检查点
+                    div.weui-cell__bd
+                     - if (user.isdone)
+                        p 已完成
+                     - else
+                        p 未完成

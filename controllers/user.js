@@ -33,7 +33,8 @@ exports.user_info = function (req, res) {
                 user.findSameOpenId(function(err, same_user) {
                     if (same_user){ // 用户数据已入库
                         if (same_user.code!=same_user.id){ // 已注册
-                            res.render('done',{desc: '您已注册，如要重新填写，请联系群主修改。', title: '绑定成功'});
+                            // res.render('done',{desc: '您已注册，如要重新填写，请联系群主修改。', title: '绑定成功'});
+                            res.render('user_show', {user: same_user, title: '个人主页'});
                         } else { // 有数据但是未注册
                             // 跳转页面让用户自己填编号
                             res.render('user_edit', {user: user, title: '三日一思'});
@@ -143,10 +144,25 @@ exports.checkpoint_uncompleted_update= function (user) {
     });
 };
 
-exports.user_delete_by_id= function (req, res) {
+exports.user_delete_by_id = function (req, res) {
     UserModel.findOneAndDelete({id : req.params.id }, function (err, product) {
         if (err) res.send('User not deleted. ' + err);
         res.send('User deleted successfully.');
+    });
+};
+
+exports.post_user_add_bulb = function (req, res) {
+    UserModel.find({ code: { $in: req.body.codes } }, function (err, users) {
+        var count = 0;
+        for(var j = 0,len = users.length; j < len; j++){
+            let u2 = users[j];
+            u2.isdone = 0;
+            u2.bulbs += 1;
+            u2.consecutive += 1;
+            u2.save();
+            count++;
+        }
+        res.send(count.toString()+' users update successfully.');
     });
 };
 

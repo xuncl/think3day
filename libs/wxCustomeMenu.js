@@ -15,18 +15,18 @@ var menus = {
         {
           "type": "view",
           "name": "规则",
-          "url": "https://mp.weixin.qq.com/s/cKaDgAi4BRovlBt0bWCXFg"
+          "url": "https://mp.weixin.qq.com/s/VmcgkESJ9kYyf6AAy0cCOA"
         },
         {
           "type": "view",
           "name": "灯泡提醒",
-          "url": "https://mp.weixin.qq.com/s/b1Wh8Rp1EC314eQPAbHjlw"
+          "url": "https://mp.weixin.qq.com/s/1dW2l5K7YJJaPetCnSu9kg"
         }
       ]
     },
     {    
       "type":"view",
-      "name":"注册",
+      "name":"个人主页",
       "url":"http://www.think3day.com/user/fetch"
   }]
 };

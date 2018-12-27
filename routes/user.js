@@ -67,6 +67,9 @@ router.get('/test', function(req, res) {
 
 });
 
+/* post user add bulb */
+router.post('/addbulb', user_controller.post_user_add_bulb);
+
 /* CRUD user APIs. */
 
 // router.post('/create', user_controller.user_create);

@@ -84,6 +84,8 @@ app.use(function(err, req, res, next) {
 // 设置定时提醒
 const remind = require('./libs/remind');
 const schedule = require('./libs/schedule');
+// 关闭之前的定时器
+schedule.stopAll();
 // 检查点当日提醒
 schedule.schedule3DayRule(remind.send_pre_remind_for_all);
 // 检查点次日更新

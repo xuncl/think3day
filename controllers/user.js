@@ -156,7 +156,7 @@ exports.post_user_add_bulb = function (req, res) {
         var count = 0;
         for(var j = 0,len = users.length; j < len; j++){
             let u2 = users[j];
-            u2.isdone = 0;
+            u2.isdone += 1;
             u2.bulbs += 1;
             u2.consecutive += 1;
             u2.save();

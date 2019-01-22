@@ -1,5 +1,14 @@
  /* jshint esversion: 6 */
 var schedule = require('node-schedule');
+var job1 = schedule.scheduleJob();
+var job2 = schedule.scheduleJob();
+var job3 = schedule.scheduleJob();
+
+exports.stopAll = function(){
+    schedule.cancelJob(job1);
+    schedule.cancelJob(job2);
+    schedule.cancelJob(job3);
+};
 
 // 检查点当天的定时器
 exports.schedule3DayRule = function(cb){
@@ -8,7 +17,7 @@ exports.schedule3DayRule = function(cb){
     rule.hour = 19; // 晚上20点发通知
     rule.minute = 55;
     
-    schedule.scheduleJob(rule, function(){
+    job1 = schedule.scheduleJob(rule, function(){
        console.log('schedule3DayRule:' + new Date());
        cb();
     });
@@ -21,7 +30,7 @@ exports.schedule3DayNextRule = function(cb){
     rule.hour = 8; // 八点发通知
     rule.minute = 0;
     
-    schedule.scheduleJob(rule, function(){
+    job2 = schedule.scheduleJob(rule, function(){
        console.log('schedule3DayNextRule:' + new Date());
        cb();
     });
@@ -33,7 +42,7 @@ exports.scheduleEverydayRule = function(cb){
     rule.hour = 7; // 早上7点发通知
     rule.minute = 0;
     
-    schedule.scheduleJob(rule, function(){
+    job3 = schedule.scheduleJob(rule, function(){
        console.log('scheduleEverydayRule:' + new Date());
        cb();
     });
